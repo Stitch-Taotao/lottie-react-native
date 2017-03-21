@@ -1,190 +1,132 @@
-Lottie for React Native, [iOS](https://github.com/airbnb/lottie-ios), and [Android](https://github.com/airbnb/lottie-android)
-===
+## Lottie应用于React Native、iOS和Android
+Lottie组件，应用于React Native(iOS和Android)
 
-[![npm Version](https://img.shields.io/npm/v/lottie-react-native.svg)](https://www.npmjs.com/package/lottie-react-native) [![License](https://img.shields.io/npm/l/lottie-react-native.svg)](https://www.npmjs.com/package/lottie-react-native) [![Build Status](https://travis-ci.org/airbnb/lottie-react-native.svg)](https://travis-ci.org/airbnb/lottie-react-native) 
+Lottie 是一个可应用于Andriod和iOS的动画库，它通过[bodymovin](https://github.com/bodymovin/bodymovin)插件来解析[Adobe After Effects ](http://www.adobe.com/products/aftereffects.html)动画并导出为json文件，并通过手机端原生方式渲染出来。
 
-Lottie component for React Native (iOS and Android)
+这是前所未有的方式，设计师可以创作并且运行优美的动画而不需要工程师煞费苦心地通过手动调整的方式来重现动画。有人说一张图片可以顶的上1000个字，那么下面就有13000个字了：
+![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Examples1.gif)
+![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Examples2.gif)
+![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Community%202_3.gif)
+![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Examples3.gif)
+![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Examples4.gif)
 
-Lottie is a mobile library for Android and iOS that parses [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) animations exported as JSON with [bodymovin](https://github.com/bodymovin/bodymovin) and renders them natively on mobile!
-
-For the first time, designers can create **and ship** beautiful animations without an engineer painstakingly recreating it by hand. They say a picture is worth 1,000 words so here are 13,000:
-
-![Example1](docs/gifs/Example1.gif)
-
-
-![Example2](docs/gifs/Example2.gif)
-
-
-![Example3](docs/gifs/Example3.gif)
-
-
-![Community](docs/gifs/Community 2_3.gif)
-
-
-![Example4](docs/gifs/Example4.gif)
-
-
-All of these animations were created in After Effects, exported with bodymovin, and rendered natively with no additional engineering effort.
-
-
-## Related Projects
-
-This project is only the code to wrap and expose Lottie to React Native. The parsing/rendering code can be found in their
-respective libraries:
-
+所有的动画都是通过After Effects创作出来，用bodymovin插件导出，不需要任何额外的工作就可以以原生的方式渲染出来。
+## 相关的项目文件
+这个项目只是用代码对Lottie进行包装并暴露给React Native。你可以从各自对应的库中找到解析和渲染的代码。
 [Lottie for iOS](https://github.com/airbnb/lottie-ios)
-
 [Lottie for Android](https://github.com/airbnb/lottie-android)
-
-
-## Installation
-
-Get started with Lottie by installing the node module:
-
-```bash
-npm i --save lottie-react-native
+### 安装
+你可以通过安装node模块来开始lottie：
+```npm i --save lottie-react-native```
+如果你在iOS中使用CocoaPods的话，你可以在`Podfile`中添加下面的代码：
 ```
-
-If you're using CocoaPods on iOS, you can put the following in your `Podfile`:
-
-```ruby
 pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 ```
-
-If you're not using CocoaPods on iOS, you can use `react-native link`:
-
-```bash
+如果你在iOS中没有用CocoaPods的话，你可以用`react-native link`:
+```
 react-native link lottie-ios
 react-native link lottie-react-native/
 ```
-
-For android, you can  `react-native link` as well:
-
-```bash
+针对Android系统，你也可以用`react-native link`:
+```
 react-native link lottie-react-native
 ```
+如果对此有任何困惑的话，请添加issue。
 
-Please file an issue if you have any trouble!
-
-
-## Basic Usage
-
-[See full component API](/docs/api.md)
-
-Lottie's animation progress can be controlled with an `Animated` value:
-
-```jsx
+### 基础的用法：
+[查看所有组件的API](https://github.com/airbnb/lottie-react-native/blob/master/docs/api.md)
+Lottie 的动画进度可以通过改变`Animated `的Value来控制：
+```
 import React from 'react';
 import { Animated } from 'react-native';
 import Animation from 'lottie-react-native';
 
 export default class BasicExample extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      progress: new Animated.Value(0),
-    };
-  }
+constructor(props) {
+super(props);
+this.state = {
+progress: new Animated.Value(0),
+};
+}
 
-  componentDidMount() {
-    Animated.timing(this.state.progress, {
-      toValue: 1,
-      duration: 5000,
-    }).start();
-  }
+componentDidMount() {
+Animated.timing(this.state.progress, {
+toValue: 1,
+duration: 5000,
+}).start();
+}
 
-  render() {
-    return (
-      <Animation
-        style={{
-          width: 200,
-          height: 200,
-        }}
-        source={require('../path/to/animation.json')}
-        progress={this.state.progress}
-      />
-    );
-  }
+render() {
+return (
+<Animation
+style={{
+width: 200,
+height: 200,
+}}
+source={require('../path/to/animation.json')}
+progress={this.state.progress}
+/>
+);
+}
 }
 ```
-
-Additionally, there is an imperative API which is sometimes simpler.
-
-```jsx
+此外，还有一些API有时候会更简单：
+```
 import React from 'react';
 import Animation from 'lottie-react-native';
 
 export default class BasicExample extends React.Component {
-  componentDidMount() {
-    this.animation.play();
-  }
+componentDidMount() {
+this.animation.play();
+}
 
-  render() {
-    return (
-      <Animation
-        ref={animation => { this.animation = animation; }}
-        style={{
-          width: 200,
-          height: 200,
-        }}
-        source={require('../path/to/animation.json')}
-      />
-    );
-  }
+render() {
+return (
+<Animation
+ref={animation => { this.animation = animation; }}
+style={{
+width: 200,
+height: 200,
+}}
+source={require('../path/to/animation.json')}
+/>
+);
+}
 }
 ```
+## 运行示例工程
 
+你可以通过以下命令来检出示例工程：
+1. 克隆仓库:``` git clone https://github.com/airbnb/lottie-react-native.git```
+2. 打开目录：``` cd lottie-react-native```并且安装:```npm install```
+3. 通过``` npm start``` 启动packager
+4. 在另一个命令行窗口，按如下步骤操作：
 
-## Running the Example Project
+针对iOS：
+1. 如果你没有用CocoaPods安装，就执行``` sudo gem install cocoapods```
+2. 安装pods：``` npm run build:pods```
+3. 运行示例代码：```npm run run:ios```
 
-You can check out the example project with the following instructions
+针对Android：
+1. 运行示例代码：```npm run run:android```
 
-1. Clone the repo: `git clone https://github.com/airbnb/lottie-react-native.git`
-2. Open: `cd lottie-react-native` and Install: `npm install`
-3. Run `npm start` to start the packager.
-4. In another CLI window, do the following:
-
-For Running iOS:
-
-1. If you don't have CocoaPods installed, run `sudo gem install cocoapods`
-2. Install pods: `npm run build:pods`
-3. Run Example: `npm run run:ios`
-
-For Running Android:
-
-1. Run Example: `npm run run:android`
-
-
-## Troubleshooting
-
-If you are trying to run `pod install` and you get:
-
+## 故障排查
+如果你在运行```pod install```时出现：
 ```
-[!] Unable to find a specification for `lottie-ios`
+[!] Unable to find a specification for `lottie-ios` 
 ```
+那么执行``` pod repo update``` 再尝试
 
-Run `pod repo update` and retry.
+## 替代方案
+1. 手动地创建动画。手动创建动画对于设计师以及iOS、Android工程师而言意味着付出巨额的时间。通常很难，甚至不可能证明花费这么多时间来获得动画是正确的。
+2. Facebook Keyframes。 Keyframes是专门用来构建用户界面的， 是FaceBook的一个很棒，很新的库。但是Keyframes不支持一些Lottie所能支持的特性，比如： 遮罩，蒙版，裁切路径，虚线样式还有很多。
+3. Gifs。Gifs 占用的大小是bodymovin生成的JSON大小的2倍还多，并且渲染的尺寸是固定的，并不能放大来适应更大更高分辨率的屏幕。
+4. Png序列桢动画。 Png序列桢动画 甚至比gifs更糟糕，它们的文件大小通常是 bodymovin json文件大小的30-50倍，并且也不能被放大。
 
+## 为什么叫Lottie？
+Lottie是以德国剪影动画先驱Lotte Reiniger（洛特·雷妮格）的名字命名的。 她最出名的作品是《阿基米德王子历险记》 (1926) – 世界上第一部长篇动画电影。 比华尔特·迪士尼的长篇动画电影——《白雪公主与七个小矮人》 (1937) 还要早了10年。[The art of Lotte Reineger](https://www.youtube.com/watch?v=LvU55CUw5Ck&feature=youtu.be)
+## 贡献
+请查看：[Contributors Guide](https://github.com/airbnb/lottie-react-native/blob/master/CONTRIBUTING.md)
+## 软件许可证书：
+[Apache-2.0](https://github.com/airbnb/lottie-react-native/blob/master/LICENSE.md)
 
-## Alternatives
-
-1. Build animations by hand. Building animations by hand is a huge time commitment for design and engineering across Android and iOS. It's often hard or even impossible to justify spending so much time to get an animation right.
-2. [Facebook Keyframes](https://github.com/facebookincubator/Keyframes). Keyframes is a wonderful new library from Facebook that they built for reactions. However, Keyframes doesn't support some of Lottie's features such as masks, mattes, trim paths, dash patterns, and more.
-2. Gifs. Gifs are more than double the size of a bodymovin JSON and are rendered at a fixed size that can't be scaled up to match large and high density screens.
-3. Png sequences. Png sequences are even worse than gifs in that their file sizes are often 30-50x the size of the bodymovin json and also can't be scaled up.
-
-
-## Why is it called Lottie?
-
-Lottie is named after a German film director and the foremost pioneer of silhouette animation. Her best known films are The Adventures of Prince Achmed (1926) – the oldest surviving feature-length animated film, preceding Walt Disney's feature-length Snow White and the Seven Dwarfs (1937) by over ten years
-[The art of Lotte Reineger](https://www.youtube.com/watch?v=LvU55CUw5Ck&feature=youtu.be)
-
-
-## Contributing
-
-See the [Contributors Guide](/CONTRIBUTING.md)
-
-
-## License
-
-[Apache-2.0](/LICENSE.md)
