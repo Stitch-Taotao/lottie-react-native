@@ -13,7 +13,7 @@ Lottie组件，应用于React Native([Android](https://github.com/CRAnimation/lo
 
 Lottie 是一个可应用于Andriod和iOS的动画库，它通过[bodymovin](https://github.com/bodymovin/bodymovin)插件来解析[Adobe After Effects ](http://www.adobe.com/products/aftereffects.html)动画并导出为json文件，并通过手机端原生方式渲染出来。
 
-这是前所未有的方式，设计师可以创作并且运行优美的动画而不需要工程师煞费苦心地通过手动调整的方式来重现动画。有人说一张图片可以顶的上1000个字，那么下面就有13000个字了：
+这是前所未有的方式，设计师可以创作并且运行优美的动画而不需要工程师煞费苦心地通过手动调整的方式来重现动画。有人说一张图片可以顶的上1000个字，那么下面就算13000个字了：
 ![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Examples1.gif)
 ![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Examples2.gif)
 ![](https://github.com/airbnb/lottie-ios/raw/master/_Gifs/Community%202_3.gif)
@@ -46,64 +46,68 @@ react-native link lottie-react-native
 ### 基础的用法：
 [查看所有组件的API](https://github.com/airbnb/lottie-react-native/blob/master/docs/api.md)
 Lottie 的动画进度可以通过改变`Animated `的Value来控制：
+
 ```
 import React from 'react';
 import { Animated } from 'react-native';
 import Animation from 'lottie-react-native';
 
 export default class BasicExample extends React.Component {
-constructor(props) {
-super(props);
-this.state = {
-progress: new Animated.Value(0),
-};
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      progress: new Animated.Value(0),
+    };
+  }
 
-componentDidMount() {
-Animated.timing(this.state.progress, {
-toValue: 1,
-duration: 5000,
-}).start();
-}
+  componentDidMount() {
+    Animated.timing(this.state.progress, {
+      toValue: 1,
+      duration: 5000,
+    }).start();
+  }
 
-render() {
-return (
-<Animation
-style={{
-width: 200,
-height: 200,
-}}
-source={require('../path/to/animation.json')}
-progress={this.state.progress}
-/>
-);
-}
+  render() {
+    return (
+      <Animation
+        style={{
+          width: 200,
+          height: 200,
+        }}
+        source={require('../path/to/animation.json')}
+        progress={this.state.progress}
+      />
+    );
+  }
 }
 ```
+
 此外，还有一些API有时候会更简单：
-```
+
+```jsx
 import React from 'react';
 import Animation from 'lottie-react-native';
 
 export default class BasicExample extends React.Component {
-componentDidMount() {
-this.animation.play();
-}
+  componentDidMount() {
+    this.animation.play();
+  }
 
-render() {
-return (
-<Animation
-ref={animation => { this.animation = animation; }}
-style={{
-width: 200,
-height: 200,
-}}
-source={require('../path/to/animation.json')}
-/>
-);
-}
+  render() {
+    return (
+      <Animation
+        ref={animation => { this.animation = animation; }}
+        style={{
+          width: 200,
+          height: 200,
+        }}
+        source={require('../path/to/animation.json')}
+      />
+    );
+  }
 }
 ```
+
 ## 运行示例工程
 
 你可以通过以下命令来检出示例工程：
